@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:agenda_contatos/helpers/contact_helper.dart';
 import 'package:agenda_contatos/ui/contact_page.dart';
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum OrderOptions {orderaz, orderza}
@@ -19,18 +19,19 @@ class _HomePageState extends State<HomePage> {
   List<Contact> contacts = List();
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    getAllContacts();
+
+    _getAllContacts();
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Contatos"),
+        title: Text("Contacts"),
         backgroundColor: Colors.red,
-        centerTitle : true,
+        centerTitle: true,
         actions: <Widget>[
           PopupMenuButton<OrderOptions>(
             itemBuilder: (context) => <PopupMenuEntry<OrderOptions>>[
@@ -49,18 +50,18 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          _showContactPage();
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.red,
+          onPressed: (){
+            _showContactPage();
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Colors.red,
       ),
       body: ListView.builder(
-        padding: EdgeInsets.all(10.0),
-        itemCount: contacts.length,
-        itemBuilder: (context, index){
-          return _contactCard(context, index);
-        }
+          padding: EdgeInsets.all(10.0),
+          itemCount: contacts.length,
+          itemBuilder: (context, index) {
+            return _contactCard(context, index);
+          }
       ),
     );
   }
@@ -69,135 +70,127 @@ class _HomePageState extends State<HomePage> {
     return GestureDetector(
       child: Card(
         child: Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Row(
-            children: <Widget>[
-              Container(
-                width: 80.0,
-                height: 80.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: contacts[index].img != null ? 
-                    FileImage(File(contacts[index].img)) :
-                    AssetImage("images/person.png")
-                  )
+            padding: EdgeInsets.all(10.0),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 80.0,
+                  height: 80.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: contacts[index].img != null ?
+                          FileImage(File(contacts[index].img)) :
+                            AssetImage("images/person.png"),
+                        fit: BoxFit.cover
+                    ),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(contacts[index].name ?? "",
-                      style: TextStyle(fontSize: 22.0, 
-                      fontWeight: FontWeight.bold)
-                    ),
-                    Text(contacts[index].email ?? "",
-                      style: TextStyle(fontSize: 18.0)
-                    ),
-                    Text(contacts[index].phone ?? "",
-                      style: TextStyle(fontSize: 18.0)
-                    )
-                  ],
+                Padding(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(contacts[index].name ?? "",
+                        style: TextStyle(fontSize: 22.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(contacts[index].email ?? "",
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                      Text(contacts[index].phone ?? "",
+                        style: TextStyle(fontSize: 18.0),
+                      )
+                    ],
+                  ),
                 )
-              )
-            ],
-          )
+              ],
+            ),
         ),
       ),
-      onTap:(){
+      onTap: (){
         _showOptions(context, index);
-      }
+      },
     );
   }
 
   void _showOptions(BuildContext context, int index){
     showModalBottomSheet(
-      context: context,
-      builder: (context){
-        return BottomSheet(
-          onClosing: (){},
-          builder: (context){
-            return Container(
-              padding: EdgeInsets.all(10.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min, //Tentar ocupar o mínimo
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: FlatButton(
-                      child: Text("Call",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 20.0
-                      ),
-                    ),
-                    onPressed:(){
-                      launch("tel:${contacts[index].phone}");
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: FlatButton(
-                      child: Text("Edit",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 20.0
+        context: context,
+        builder: (context){
+          return BottomSheet(
+            onClosing: (){},
+            builder: (context){
+              return Container(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text("Call",
+                          style: TextStyle(color: Colors.red, fontSize: 20.0),
                         ),
-                      ),
-                      onPressed:(){
-                        Navigator.pop(context);
-                        _showContactPage(contact: contacts[index]);
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: FlatButton(
-                      child: Text("Delete",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 20.0
-                        ),
-                      ),
-                      onPressed:(){
-                        helper.deleteContact(contacts[index].id);
-                        setState((){
-                          contacts.removeAt(index);
+                        onPressed: (){
+                          launch("tel:${contacts[index].phone}");
                           Navigator.pop(context);
-                        });
-                      },
+                        },
+                      ),
                     ),
-                  )
-                ]
-              )
-            );
-          },
-        );
-      }
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text("Edit",
+                          style: TextStyle(color: Colors.red, fontSize: 20.0),
+                        ),
+                        onPressed: (){
+                          Navigator.pop(context);
+                          _showContactPage(contact: contacts[index]);
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: FlatButton(
+                        child: Text("Delete",
+                          style: TextStyle(color: Colors.red, fontSize: 20.0),
+                        ),
+                        onPressed: (){
+                          helper.deleteContact(contacts[index].id);
+                          setState(() {
+                            contacts.removeAt(index);
+                            Navigator.pop(context);
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        }
     );
   }
 
   void _showContactPage({Contact contact}) async {
-    final recContact = await Navigator.push(context, 
-      MaterialPageRoute(builder: (context) => ContactPage(contact: contact))
+    final recContact = await Navigator.push(context,
+      MaterialPageRoute(builder: (context) => ContactPage(contact: contact,))
     );
-    if (recContact != null){
+    if(recContact != null){
       if(contact != null){
         await helper.updateContact(recContact);
       } else {
         await helper.saveContact(recContact);
       }
-      helper.getAllContacts();
+      _getAllContacts();
     }
   }
 
-  void getAllContacts(){
+  void _getAllContacts(){
     helper.getAllContacts().then((list){
-      setState((){
+      setState(() {
         contacts = list;
       });
     });
@@ -206,20 +199,19 @@ class _HomePageState extends State<HomePage> {
   void _orderList(OrderOptions result){
     switch(result){
       case OrderOptions.orderaz:
-        contacts.sort((a,b){
+        contacts.sort((a, b) {
           return a.name.toLowerCase().compareTo(b.name.toLowerCase());
         });
         break;
       case OrderOptions.orderza:
-        contacts.sort((a,b){
+        contacts.sort((a, b) {
           return b.name.toLowerCase().compareTo(a.name.toLowerCase());
         });
         break;
-      default:
-        break;
     }
-    setState((){
+    setState(() {
 
     });
   }
+
 }

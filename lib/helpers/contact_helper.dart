@@ -18,7 +18,7 @@ class ContactHelper{
   Database _db;
 
   Future<Database> get db async {
-    if(db != null){
+    if(_db != null){
       return _db;
     }else{
       _db = await initDb();
@@ -28,7 +28,7 @@ class ContactHelper{
 
   Future<Database> initDb() async{
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, "contacts.db");
+    final path = join(databasesPath, "contactsnew.db");
     
     return await openDatabase(path, version: 1, onCreate:(Database db, int newerVersion) async{
       await db.execute(
