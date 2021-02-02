@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:agenda_contatos/helpers/contact_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class ContactPage extends StatefulWidget {
 
@@ -16,6 +18,8 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
+
+  var maskFormatter = new MaskTextInputFormatter(mask: '(##) #####-####', filter: { "#": RegExp(r'[0-9]') });
 
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -93,7 +97,7 @@ class _ContactPageState extends State<ContactPage> {
               TextField(
                 controller: _nameController,
                 focusNode: _nameFocus,
-                decoration: InputDecoration(labelText: "Nome"),
+                decoration: InputDecoration(labelText: "Name"),
                 onChanged: (text){
                   _userEdited = true;
                   setState(() {
@@ -103,19 +107,22 @@ class _ContactPageState extends State<ContactPage> {
               ),
               TextField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: "Email"),
+                decoration: InputDecoration(labelText: "E-mail"),
                 onChanged: (text){
                   _userEdited = true;
-                  _editedContact.email = text;
+                  _editedContact.email = text;              
                 },
                 keyboardType: TextInputType.emailAddress,
               ),
               TextField(
                 controller: _phoneController,
+                inputFormatters: [maskFormatter],
                 decoration: InputDecoration(labelText: "Phone"),
                 onChanged: (text){
                   _userEdited = true;
-                  _editedContact.phone = text;
+                  setState(() {
+                    _editedContact.phone = text;
+                  });
                 },
                 keyboardType: TextInputType.phone,
               ),
