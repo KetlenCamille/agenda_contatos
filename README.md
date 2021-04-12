@@ -14,7 +14,7 @@ O aplicativo faz o de gerenciamento de contatos, com as seguintes funções: <br
 - Opção de ligar, utilizando o próprio recurso do telefone; <br>
 - Formatação do campo telefone para o modelo (##) #####-####; <br>
 - Validação de quando é realizado as alterações do contato e não é salvo; <br>
-- E por fim, a possibilidade de excluir o contato através de duas maneiras: arrastando para a direita, na própria lista de contatos ou na caixa de opções.. <br><br>
+- E por fim, a possibilidade de excluir o contato através de duas maneiras: arrastando para a direita, na própria lista de contatos ou na caixa de opções. <br><br>
 
 Feito com ♥ by Ketlen Rieper
 
