@@ -1,20 +1,20 @@
-<b>Agenda de contatos</b>
+<b>Contact book</b>
 
-✨ Tecnologias <br>
-Esse projeto foi desenvolvido com as seguintes tecnologias:
+✨ Technologies<br>
+This project was developed with these technologies:
 <ul>
   <li>Flutter</li>
   <li>Dart</li>
 </ul>
 <br>
-💻 Projeto <br>
-O aplicativo faz o de gerenciamento de contatos, com as seguintes funções: <br>
-- Ordenação da lista de contatos A-Z e Z-A;<br>
-- Tirando foto, utilizando a próprio câmera do celular; <br>
-- Opção de ligar, utilizando o próprio recurso do telefone; <br>
-- Formatação do campo telefone para o modelo (##) #####-####; <br>
-- Validação de quando é realizado as alterações do contato e não é salvo; <br>
-- E por fim, a possibilidade de excluir o contato através de duas maneiras: arrastando para a direita, na própria lista de contatos ou na caixa de opções. <br><br>
+💻 Project <br>
+The application manages contacts, with the following functions: <br>
+- Sorting the A-Z and Z-A contact list;<br>
+- Taking a picture using the cell phone camera; <br>
+- Option to call, using the phone's own feature; <br>
+- Phone field formatting for template (##) #####-####; <br>
+- Validation of when contact changes are made and not saved; <br>
+- And finally, the possibility to delete the contact in two ways: by dragging to the right, in the contact list itself or in the options box. <br><br>
 
-Feito com ♥ by Ketlen Rieper
+Developed with ♥ by Ketlen Rieper
 
